@@ -3,13 +3,18 @@
 
 	export let name = '';
 	const dispatch = createEventDispatcher();
-	const submit = () => dispatch('submit', {name: name});
+	const submit = () => {
+		dispatch('submit', {name: name})
+		name = '';
+	};
 </script>
 
 <div>
-	<label for="player js-add-player-btn">Add a player:</label>
-	<input type="text" id="player" bind:value="{name}">
-	<button on:click="{ submit }">Add player</button>
+	<form on:submit|preventDefault={submit}>
+		<label for="player js-add-player-btn">Add a player:</label>
+		<input type="text" id="player" bind:value="{name}">
+		<input type="submit" value="Add player">
+	</form>
 </div>
 
 <style>
