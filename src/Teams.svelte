@@ -1,5 +1,5 @@
 <script>
-
+	export let players;
 </script>
 
 <div class="teams">
@@ -7,9 +7,11 @@
 		<div class="teams__label">Team A</div>
 		<div class="teams__playerbox">
 			<ul>
-				<li>David H</li>
-				<li>Max</li>
-				<li>Matt</li>
+				{#each players as player}
+					{#if player.isPlaying}
+						<li>{player.name}</li>
+					{/if}
+				{/each}
 			</ul>
 		</div>
 	</div>

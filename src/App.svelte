@@ -3,21 +3,46 @@
 	import PlayerPool from './PlayerPool.svelte';
 	import Teams from './Teams.svelte';
 
+	let uid = 1;
 	let players = [
-		'David H',
-		'Max',
-		'Matt',
+		{
+			uid: uid++,
+			name: 'David H',
+			isPlaying: false,
+		},
+		{
+			uid: uid++,
+			name: 'Max',
+			isPlaying: false,
+		},
+		{
+			uid: uid++,
+			name: 'Matt',
+			isPlaying: false,
+		},
 	];
 
 	function handleSubmit(data) {
-		players = [...players, data.detail.name];
+		players = [
+			...players,
+			{ 
+				uid: uid++,
+				name: data.detail.name,
+				isPlaying: true,
+			}
+		];
+	}
+
+	function handlePlayerSelect(data) {
+		data.detail.player.isPlaying = data.detail.isPlaying;
+		players = players;
 	}
 </script>
 
 <main>
 	<AddPlayer on:submit={handleSubmit} />
-	<PlayerPool bind:players={players} />
-	<Teams />
+	<PlayerPool bind:players={players} on:playerSelect={handlePlayerSelect} />
+	<Teams bind:players={players} />
 </main>
 
 <style>
