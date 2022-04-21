@@ -1,11 +1,7 @@
-<script>
-	export let name = '';
-</script>
-
 <div>
 	<form on:submit|preventDefault>
 		<label for="player js-add-player-btn">Add a player:</label>
-		<input type="text" id="player" name="playerName" bind:value="{name}">
+		<input type="text" id="player" name="playerName">
 		<input type="submit" value="Add player">
 	</form>
 </div>
