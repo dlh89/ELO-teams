@@ -9,7 +9,8 @@
 			<ul>
 				{#each players as player}
 					{#if player.isPlaying}
-						<li>{player.name}</li>
+						<input type="checkbox" name="{player.uid}" id="{player.uid}" checked on:change>
+						<label for="{player.uid}">{player.name}</label>
 					{/if}
 				{/each}
 			</ul>

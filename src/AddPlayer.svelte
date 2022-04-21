@@ -1,18 +1,11 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
-
 	export let name = '';
-	const dispatch = createEventDispatcher();
-	const submit = () => {
-		dispatch('submit', {name: name})
-		name = '';
-	};
 </script>
 
 <div>
-	<form on:submit|preventDefault={submit}>
+	<form on:submit|preventDefault>
 		<label for="player js-add-player-btn">Add a player:</label>
-		<input type="text" id="player" bind:value="{name}">
+		<input type="text" id="player" name="playerName" bind:value="{name}">
 		<input type="submit" value="Add player">
 	</form>
 </div>
