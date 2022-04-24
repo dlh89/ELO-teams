@@ -4,6 +4,7 @@
 </script>
 
 <div>
+	<div>Player Pool</div>
 	{#each players as player}
 		{#if !player.isPlaying}	
 		<div transition:slide|local>
