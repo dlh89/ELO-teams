@@ -69,7 +69,7 @@
 	 * @param items
 	 */
 	function fisherYatesShuffle(items) {
-		let currentIndex = items.length, randomItem, randomIndex;
+		let currentIndex = items.length, currentItem, randomIndex;
 
 		// While there remain elements to shuffle…
 		while (currentIndex) {
@@ -78,9 +78,9 @@
 			randomIndex = Math.floor(Math.random() * currentIndex--);
 
 			// And swap it with the current element.
-			randomItem = items[currentIndex];
+			currentItem = items[currentIndex];
 			items[currentIndex] = items[randomIndex];
-			items[randomIndex] = randomItem;
+			items[randomIndex] = currentItem;
 		}
 
 		return items;
