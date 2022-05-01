@@ -60,6 +60,8 @@
 			team = i % 2 ? 'a' : 'b';
 			player.team = team;
 		});
+
+		players = players;
 	}
 
 	/**
@@ -88,7 +90,7 @@
 <main>
 	<AddPlayer on:submit={handleSubmit} />
 	<PlayerPool bind:players={players} on:change={handlePlayerSelect} />
-	<Teams bind:players={players} bind:teamsPicked={teamsPicked} on:change={handleRemovePlayer} on:click={handleSortTeams} />
+	<Teams bind:players={players} bind:teamsPicked={teamsPicked} on:click={handleSortTeams} />
 </main>
 
 <style>

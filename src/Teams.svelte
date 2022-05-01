@@ -33,17 +33,17 @@
 		<div class="teams__team">
 			<div class="teams__label">Team B</div>
 			<div class="teams__playerbox">
+				<ul>
 				{#each players as player}
 					{#if player.isPlaying && player.team === 'b'}
-						<div>
-							<input type="checkbox" name="{player.uid}" id="{player.uid}" checked>
-							<label for="{player.uid}">{player.name}</label>
-						</div>
+						<li>{player.name}</li>
 					{/if}
 				{/each}
+				</ul>
 			</div>
 		</div>
 	</div>
+	<button on:click>Reshuffle teams</button>
 {/if}
 
 <style>
