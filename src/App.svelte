@@ -25,11 +25,12 @@
 		},
 	];
 
+	let teamsPlayers = [];
+
 	let teamsPicked = false;
 
 	function handleSubmit(e) {
 		const formData = new FormData(e.target);
-		console.log(formData);
 		players = [
 			...players,
 			{ 
@@ -51,9 +52,15 @@
 	}
 
 	function handleSortTeams() {
-		teamsPicked = true;
+		const activePlayers = getActivePlayers(players);
+		let shuffledPlayers, arePlayersIdentical;
+		
 		// sort the players randomly for now
-		const shuffledPlayers = fisherYatesShuffle(players);
+		do {
+			shuffledPlayers = fisherYatesShuffle(activePlayers);
+			arePlayersIdentical = areArraysIdentical(shuffledPlayers, teamsPlayers);
+		} while (arePlayersIdentical && teamsPlayers.length > 1);
+		
 		let team;
 
 		shuffledPlayers.forEach(function(player, i) {
@@ -61,7 +68,22 @@
 			player.team = team;
 		});
 
-		players = players;
+		teamsPlayers = shuffledPlayers;
+		teamsPicked = true;
+	}
+
+	function getActivePlayers(players) {
+		const activePlayers = players.filter(player => player.isPlaying);
+
+		return activePlayers;
+	}
+
+	function areArraysIdentical(arr1, arr2) {
+		var i = arr1.length;
+		while (i--) {
+			if (arr1[i] !== arr2[i]) return false;
+		}
+		return true
 	}
 
 	/**
@@ -90,7 +112,7 @@
 <main>
 	<AddPlayer on:submit={handleSubmit} />
 	<PlayerPool bind:players={players} on:change={handlePlayerSelect} />
-	<Teams bind:players={players} bind:teamsPicked={teamsPicked} on:click={handleSortTeams} />
+	<Teams bind:players={players} bind:teamsPicked={teamsPicked} bind:teamsPlayers={teamsPlayers} on:click={handleSortTeams} />
 </main>
 
 <style>

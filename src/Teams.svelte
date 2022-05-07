@@ -1,5 +1,6 @@
 <script>
 	export let players;
+	export let teamsPlayers;
 	export let teamsPicked;
 </script>
 
@@ -22,8 +23,8 @@
 			<div class="teams__label">Team A</div>
 			<div class="teams__playerbox">
 				<ul>
-				{#each players as player}
-					{#if player.isPlaying && player.team === 'a'}
+				{#each teamsPlayers as player}
+					{#if player.team === 'a'}
 						<li>{player.name}</li>
 					{/if}
 				{/each}
@@ -34,8 +35,8 @@
 			<div class="teams__label">Team B</div>
 			<div class="teams__playerbox">
 				<ul>
-				{#each players as player}
-					{#if player.isPlaying && player.team === 'b'}
+				{#each teamsPlayers as player}
+					{#if player.team === 'b'}
 						<li>{player.name}</li>
 					{/if}
 				{/each}
