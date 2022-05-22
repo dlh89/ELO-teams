@@ -47,6 +47,7 @@
 	}
 
 	function handleRemovePlayer(e) {
+		console.log('remove');
 		players[e.target.name - 1].isPlaying = false;
 		players = players;
 	}
@@ -112,7 +113,7 @@
 <main>
 	<AddPlayer on:submit={handleSubmit} />
 	<PlayerPool bind:players={players} on:change={handlePlayerSelect} />
-	<Teams bind:players={players} bind:teamsPicked={teamsPicked} bind:teamsPlayers={teamsPlayers} on:click={handleSortTeams} />
+	<Teams bind:players={players} bind:teamsPicked={teamsPicked} bind:teamsPlayers={teamsPlayers} on:click={handleSortTeams} on:change={handleRemovePlayer} />
 </main>
 
 <style>
