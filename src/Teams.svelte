@@ -6,17 +6,21 @@
 
 {#if !teamsPicked}
 	<div class="teams__pool">
-		<div class="teams__label">Active players</div>
-		{#each players as player}
-			{#if player.isPlaying}
-				<div>
-					<input type="checkbox" name="{player.uid}" id="{player.uid}" checked on:change>
-					<label for="{player.uid}">{player.name}</label>
-				</div>
-			{/if}
-		{/each}
+		{#if players.filter(player => player.isPlaying).length }
+			<div class="teams__label">Active players</div>
+			{#each players as player}
+				{#if player.isPlaying}
+					<div>
+						<input type="checkbox" name="{player.uid}" id="{player.uid}" checked on:change>
+						<label for="{player.uid}">{player.name}</label>
+					</div>
+				{/if}
+			{/each}
+		{/if}
 	</div>
-	<button on:click>Sort teams</button>
+	{#if players.filter(player => player.isPlaying).length }
+		<button on:click>Sort teams</button>
+	{/if}
 {:else}
 	<div class="teams">
 		<div class="teams__team">

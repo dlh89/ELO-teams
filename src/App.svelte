@@ -47,7 +47,6 @@
 	}
 
 	function handleRemovePlayer(e) {
-		console.log('remove');
 		players[e.target.name - 1].isPlaying = false;
 		players = players;
 	}
