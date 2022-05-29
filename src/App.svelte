@@ -39,6 +39,7 @@
 				isPlaying: false,
 			}
 		];
+		e.target.reset();
 	}
 
 	function handlePlayerSelect(e) {
