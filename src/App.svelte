@@ -107,12 +107,16 @@
 
 		return items;
 	}
+
+	function handleModifyPlayerPool() {
+		teamsPicked = false;
+	}
 </script>
 
 <main>
 	<AddPlayer on:submit={handleSubmit} />
-	<PlayerPool bind:players={players} on:change={handlePlayerSelect} />
-	<Teams bind:players={players} bind:teamsPicked={teamsPicked} bind:teamsPlayers={teamsPlayers} on:click={handleSortTeams} on:change={handleRemovePlayer} />
+	<PlayerPool bind:players={players} bind:teamsPicked={teamsPicked} on:change={handlePlayerSelect} />
+	<Teams bind:players={players} bind:teamsPicked={teamsPicked} bind:teamsPlayers={teamsPlayers} on:click={handleSortTeams} on:modifyPlayerPool={handleModifyPlayerPool} on:change={handleRemovePlayer} />
 </main>
 
 <style>

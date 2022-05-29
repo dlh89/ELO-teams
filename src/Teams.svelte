@@ -1,7 +1,14 @@
 <script>
+	import { createEventDispatcher } from 'svelte';
 	export let players;
 	export let teamsPlayers;
 	export let teamsPicked;
+
+	const dispatch = createEventDispatcher();
+
+	function modifyPlayerPool() {
+		dispatch('modifyPlayerPool');
+	}
 </script>
 
 {#if !teamsPicked}
@@ -49,6 +56,7 @@
 		</div>
 	</div>
 	<button on:click>Reshuffle teams</button>
+	<button on:click={modifyPlayerPool}>Edit players</button>
 {/if}
 
 <style>
