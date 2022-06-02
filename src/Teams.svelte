@@ -14,7 +14,7 @@
 {#if !teamsPicked}
 	<div class="teams__pool">
 		{#if players.filter(player => player.isPlaying).length }
-			<div class="teams__label">Active players</div>
+			<div class="heading-2">Active players</div>
 			{#each players as player}
 				{#if player.isPlaying}
 					<div>

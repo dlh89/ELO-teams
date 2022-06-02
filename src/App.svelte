@@ -127,6 +127,11 @@
 		margin: 0 auto;
 	}
 
+	:global(.heading-2) {
+		font-size: 24px;
+		font-weight: 800;
+	}
+
 	/* @media (min-width: 640px) {
 		main {
 			max-width: none;

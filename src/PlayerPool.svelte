@@ -5,7 +5,7 @@
 </script>
 
 <div>
-	<div>Player Pool</div>
+	<div class="heading-2">Player Pool</div>
 	{#each players as player}
 		{#if !player.isPlaying}	
 		<div transition:slide|local>
