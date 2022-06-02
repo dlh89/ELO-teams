@@ -25,7 +25,7 @@
 			{/each}
 		{/if}
 	</div>
-	{#if players.filter(player => player.isPlaying).length }
+	{#if players.filter(player => player.isPlaying).length > 1 }
 		<button on:click>Sort teams</button>
 	{/if}
 {:else}
