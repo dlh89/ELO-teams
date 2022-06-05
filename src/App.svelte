@@ -115,6 +115,7 @@
 </script>
 
 <main>
+	<h1>ELO Teams</h1>
 	<AddPlayer on:submit={handleSubmit} />
 	<PlayerPool bind:players={players} bind:teamsPicked={teamsPicked} on:change={handlePlayerSelect} />
 	<Teams bind:players={players} bind:teamsPicked={teamsPicked} bind:teamsPlayers={teamsPlayers} on:click={handleSortTeams} on:modifyPlayerPool={handleModifyPlayerPool} on:change={handleRemovePlayer} />
@@ -127,9 +128,15 @@
 		margin: 0 auto;
 	}
 
+	h1 {
+		font-size: 32px;
+		margin-bottom: 30px;
+	}
+
 	:global(.heading-2) {
 		font-size: 24px;
 		font-weight: 800;
+		margin-bottom: 18px;
 	}
 
 	/* @media (min-width: 640px) {
