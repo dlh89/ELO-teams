@@ -2,6 +2,8 @@
 	import AddPlayer from './AddPlayer.svelte';
 	import PlayerPool from './PlayerPool.svelte';
 	import Teams from './Teams.svelte';
+	import RecordResults from './RecordResults.svelte';
+	import Modal, {getModal} from './Modal.svelte'
 	import CalculateElo from './inc/CalculateElo.js';
 
 	const calculateElo = new CalculateElo();
@@ -122,13 +124,24 @@
 	function handleModifyPlayerPool() {
 		teamsPicked = false;
 	}
+
+	function handleRecordResults() {
+		// TODO trigger displaying the component?
+		getModal().open();
+	}
 </script>
 
 <main>
 	<h1>ELO Teams</h1>
 	<AddPlayer on:submit={handleSubmit} />
 	<PlayerPool bind:players={players} bind:teamsPicked={teamsPicked} on:change={handlePlayerSelect} />
-	<Teams bind:players={players} bind:teamsPicked={teamsPicked} bind:teamsPlayers={teamsPlayers} on:click={handleSortTeams} on:modifyPlayerPool={handleModifyPlayerPool} on:change={handleRemovePlayer} />
+	<Teams bind:players={players} bind:teamsPicked={teamsPicked} bind:teamsPlayers={teamsPlayers} on:click={handleSortTeams} on:modifyPlayerPool={handleModifyPlayerPool} on:recordResults={handleRecordResults} on:change={handleRemovePlayer} />
+	<RecordResults bind:teamsPlayers={teamsPlayers} />
+	<Modal>
+		<p>Which team won?</p>
+		<button>Team A</button>
+		<button>Team B</button>
+	</Modal>
 </main>
 
 <style>

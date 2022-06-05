@@ -10,6 +10,10 @@
 	function modifyPlayerPool() {
 		dispatch('modifyPlayerPool');
 	}
+
+	function recordResults() {
+		dispatch('recordResults');
+	}
 </script>
 
 {#if !teamsPicked}
@@ -60,6 +64,7 @@
 	</div>
 	<button on:click>Reshuffle teams</button>
 	<button on:click={modifyPlayerPool}>Edit players</button>
+	<button on:click={recordResults}>Record results</button>
 {/if}
 
 <style>
