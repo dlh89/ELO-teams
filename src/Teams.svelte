@@ -1,5 +1,6 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
+	import { slide } from 'svelte/transition';
 	export let players;
 	export let teamsPlayers;
 	export let teamsPicked;
@@ -12,22 +13,24 @@
 </script>
 
 {#if !teamsPicked}
-	<div class="teams__pool">
-		{#if players.filter(player => player.isPlaying).length }
-			<div class="heading-2">Active players</div>
-			{#each players as player}
-				{#if player.isPlaying}
-					<div>
-						<input type="checkbox" name="{player.uid}" id="{player.uid}" checked on:change>
-						<label for="{player.uid}">{player.name}</label>
-					</div>
-				{/if}
-			{/each}
+	<div transition:slide>
+		<div class="teams__pool" >
+			{#if players.filter(player => player.isPlaying).length }
+				<div class="heading-2">Active players</div>
+				{#each players as player}
+					{#if player.isPlaying}
+						<div>
+							<input type="checkbox" name="{player.uid}" id="{player.uid}" checked on:change>
+							<label for="{player.uid}">{player.name}</label>
+						</div>
+					{/if}
+				{/each}
+			{/if}
+		</div>
+		{#if players.filter(player => player.isPlaying).length > 1 }
+			<button on:click >Sort teams</button>
 		{/if}
 	</div>
-	{#if players.filter(player => player.isPlaying).length > 1 }
-		<button on:click>Sort teams</button>
-	{/if}
 {:else}
 	<div class="teams">
 		<div class="teams__team">

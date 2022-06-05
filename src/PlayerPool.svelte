@@ -5,7 +5,7 @@
 </script>
 
 {#if players.filter(player => !player.isPlaying).length}	
-	<div>
+	<div transition:slide>
 		<div class="heading-2">Player Pool</div>
 		{#each players as player}
 			{#if !player.isPlaying}	
