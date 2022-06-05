@@ -2,26 +2,34 @@
 	import AddPlayer from './AddPlayer.svelte';
 	import PlayerPool from './PlayerPool.svelte';
 	import Teams from './Teams.svelte';
+	import CalculateElo from './inc/CalculateElo.js';
+
+	const calculateElo = new CalculateElo();
 
 	let uid = 1;
+
+	// Hardcoded players for testing - would come from database in practice
 	let players = [
 		{
 			uid: uid++,
 			name: 'David H',
 			isPlaying: false,
 			team: null,
+			elo: 1000,
 		},
 		{
 			uid: uid++,
 			name: 'Max',
 			isPlaying: false,
 			team: null,
+			elo: 2000,
 		},
 		{
 			uid: uid++,
 			name: 'Matt',
 			isPlaying: false,
 			team: null,
+			elo: 1500
 		},
 	];
 
@@ -37,6 +45,8 @@
 				uid: uid++,
 				name: formData.get('playerName'),
 				isPlaying: false,
+				team: null,
+				elo: calculateElo.startingElo,
 			}
 		];
 		e.target.reset();
