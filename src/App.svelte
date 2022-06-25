@@ -125,8 +125,7 @@
 		teamsPicked = false;
 	}
 
-	function handleRecordResults() {
-		// TODO trigger displaying the component?
+	function handleOpenRecordResults() {
 		getModal().open();
 	}
 </script>
@@ -135,12 +134,9 @@
 	<h1>ELO Teams</h1>
 	<AddPlayer on:submit={handleSubmit} />
 	<PlayerPool bind:players={players} bind:teamsPicked={teamsPicked} on:change={handlePlayerSelect} />
-	<Teams bind:players={players} bind:teamsPicked={teamsPicked} bind:teamsPlayers={teamsPlayers} on:click={handleSortTeams} on:modifyPlayerPool={handleModifyPlayerPool} on:recordResults={handleRecordResults} on:change={handleRemovePlayer} />
-	<RecordResults bind:teamsPlayers={teamsPlayers} />
+	<Teams bind:players={players} bind:teamsPicked={teamsPicked} bind:teamsPlayers={teamsPlayers} on:click={handleSortTeams} on:modifyPlayerPool={handleModifyPlayerPool} on:openRecordResults={handleOpenRecordResults} on:change={handleRemovePlayer} />
 	<Modal>
-		<p>Which team won?</p>
-		<button>Team A</button>
-		<button>Team B</button>
+		<RecordResults />
 	</Modal>
 </main>
 
