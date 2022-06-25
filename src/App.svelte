@@ -129,6 +129,24 @@
 		getModal().open();
 	}
 
+	function handleResults(e) {
+		const teamAAverageElo = getAverageElo('a');
+		const teamBAverageElo = getAverageElo('b');
+		const teamAExpectedScore = calculateElo.getExpectedScore(teamBAverageElo, teamAAverageElo);
+		const teamBExpectedScore = 1 - teamAExpectedScore;
+		
+		teamsPlayers = teamsPlayers.map((player) => {
+			const actualScore = player.team === e.detail.winningTeam ? 1 : 0;
+			const expectedScore = player.team === 'a' ? teamAExpectedScore : teamBExpectedScore;
+			const newPlayerRating = calculateElo.getNewPlayerRating(player.elo, actualScore, expectedScore);
+			player.elo = newPlayerRating;
+
+			return player;
+		});
+
+		getModal().close();
+	}
+
 	function getAverageElo(teamName) {
 		const combinedElo = teamsPlayers.reduce(
 			(previousValue, currentValue) => currentValue.team === teamName ? previousValue + currentValue.elo : previousValue, 0
@@ -150,7 +168,7 @@
 	<PlayerPool bind:players={players} bind:teamsPicked={teamsPicked} on:change={handlePlayerSelect} />
 	<Teams bind:players={players} bind:teamsPicked={teamsPicked} bind:teamsPlayers={teamsPlayers} on:click={handleSortTeams} on:modifyPlayerPool={handleModifyPlayerPool} on:openRecordResults={handleOpenRecordResults} on:change={handleRemovePlayer} />
 	<Modal>
-		<RecordResults />
+		<RecordResults on:recordResults={handleResults} />
 	</Modal>
 </main>
 

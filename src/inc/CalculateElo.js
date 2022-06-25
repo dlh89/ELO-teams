@@ -18,21 +18,17 @@ class CalculateElo {
     /**
      * Based on https://www.geeksforgeeks.org/elo-rating-algorithm/
      */
-    eloProbability(rating1, rating2) {
+    getExpectedScore(rating1, rating2) {
 		return (
 			(1.0 * 1.0) / (1 + 1.0 * Math.pow(10, (1.0 * (rating1 - rating2)) / 400)) // TODO where does 400 come from?
 		);
 	}
 
-    updateElo(teamElo, opponentElo, isWin) {
-		// get the prior probability ratings
-		const winProbability = eloProbability(teamElo, opponentElo);
-		const lossProbability = eloProbability(teamElo, opponentElo);
-
-		const updatedElo = isWin ? this.K * (1 - winProbability) : this.K * (0 - lossProbability);
-
-		return updatedElo;
-	}
+    getNewPlayerRating(playerRating, actualScore, expectedScore)
+    {
+        // actualScore 1 for win, 0 for loss
+        return Math.round(playerRating + this.k * (actualScore - expectedScore));
+    }
 }
 
 export default CalculateElo;
