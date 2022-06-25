@@ -128,6 +128,20 @@
 	function handleOpenRecordResults() {
 		getModal().open();
 	}
+
+	function getAverageElo(teamName) {
+		const combinedElo = teamsPlayers.reduce(
+			(previousValue, currentValue) => currentValue.team === teamName ? previousValue + currentValue.elo : previousValue, 0
+		);
+
+		const playerCount = teamsPlayers.reduce(
+			(previousValue, currentValue) => currentValue.team === teamName ? ++previousValue : previousValue, 0
+		);
+
+		const averageElo = combinedElo / playerCount;
+
+		return averageElo
+	}
 </script>
 
 <main>
