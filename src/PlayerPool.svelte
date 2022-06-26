@@ -11,10 +11,10 @@
 			{#if !player.isPlaying}	
 			<div transition:slide|local>
 				{#if teamsPicked}
-					<p>{player.name}</p>
+					<p>{player.name} ({player.elo})</p>
 				{:else}
 					<input type="checkbox" name="{player.uid}" id="{player.uid}" on:change>
-					<label for="{player.uid}">{player.name}</label>
+					<label for="{player.uid}">{player.name} ({player.elo})</label>
 				{/if}
 			</div>
 			{/if}

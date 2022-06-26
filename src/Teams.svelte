@@ -25,7 +25,7 @@
 					{#if player.isPlaying}
 						<div>
 							<input type="checkbox" name="{player.uid}" id="{player.uid}" checked on:change>
-							<label for="{player.uid}">{player.name}</label>
+							<label for="{player.uid}">{player.name} ({player.elo})</label>
 						</div>
 					{/if}
 				{/each}
@@ -43,7 +43,7 @@
 				<ul>
 				{#each teamsPlayers as player}
 					{#if player.team === 'a'}
-						<li>{player.name}</li>
+						<li>{player.name} ({player.elo})</li>
 					{/if}
 				{/each}
 				</ul>
@@ -55,7 +55,7 @@
 				<ul>
 				{#each teamsPlayers as player}
 					{#if player.team === 'b'}
-						<li>{player.name}</li>
+						<li>{player.name} ({player.elo})</li>
 					{/if}
 				{/each}
 				</ul>
