@@ -4,9 +4,9 @@
 	export let teamsPicked;
 </script>
 
-{#if players.filter(player => !player.isPlaying).length}	
-	<div transition:slide>
-		<div class="heading-2">Player Pool</div>
+<div transition:slide>
+	<div class="heading-2">Player Pool</div>
+	{#if players.filter(player => !player.isPlaying).length}	
 		{#each players as player}
 			{#if !player.isPlaying}	
 			<div transition:slide|local>
@@ -19,8 +19,8 @@
 			</div>
 			{/if}
 		{/each}
-	</div>
-{/if}
+	{/if}
+</div>
 
 <style>
 	label {

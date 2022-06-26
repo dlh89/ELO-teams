@@ -1,6 +1,7 @@
 <script>
 	import AddPlayer from './AddPlayer.svelte';
 	import PlayerPool from './PlayerPool.svelte';
+	import TeamsPool from './TeamsPool.svelte';
 	import Teams from './Teams.svelte';
 	import RecordResults from './RecordResults.svelte';
 	import Modal, {getModal} from './Modal.svelte'
@@ -165,8 +166,21 @@
 <main>
 	<h1>ELO Teams</h1>
 	<AddPlayer on:submit={handleSubmit} />
-	<PlayerPool bind:players={players} bind:teamsPicked={teamsPicked} on:change={handlePlayerSelect} />
-	<Teams bind:players={players} bind:teamsPicked={teamsPicked} bind:teamsPlayers={teamsPlayers} on:click={handleSortTeams} on:modifyPlayerPool={handleModifyPlayerPool} on:openRecordResults={handleOpenRecordResults} on:change={handleRemovePlayer} />
+	<div class="player-selection">
+		<div class="players-container">
+			<PlayerPool bind:players={players} bind:teamsPicked={teamsPicked} on:change={handlePlayerSelect} />
+		</div>
+		<div class="players-container">
+			<TeamsPool bind:players={players} bind:teamsPicked={teamsPicked} on:change={handleRemovePlayer} />
+		</div>
+	</div>
+	{#if !teamsPicked}
+		{#if players.filter(player => player.isPlaying).length > 1 }
+			<button on:click={handleSortTeams}>Sort teams</button>
+		{/if}
+	{/if}
+	<Teams bind:teamsPicked={teamsPicked} bind:teamsPlayers={teamsPlayers} on:modifyPlayerPool={handleModifyPlayerPool} on:openRecordResults={handleOpenRecordResults} on:change={handleRemovePlayer} on:click={handleSortTeams} />
+
 	<Modal>
 		<RecordResults on:recordResults={handleResults} />
 	</Modal>
@@ -188,6 +202,17 @@
 		font-size: 24px;
 		font-weight: 800;
 		margin-bottom: 18px;
+	}
+
+	.player-selection {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.players-container {
+		background: #f3f3f3;
+		width: 50%;
+		padding: 20px;
 	}
 
 	/* @media (min-width: 640px) {
