@@ -164,7 +164,7 @@
 </script>
 
 <main>
-	<h1>ELO Teams</h1>
+	<h1>Elo Teams</h1>
 	<AddPlayer on:submit={handleSubmit} />
 	<div class="player-selection">
 		<div class="players-container">
