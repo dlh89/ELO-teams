@@ -54,6 +54,7 @@
 	.teams__team {
 		border: 1px solid #707070;
 		flex-grow: 1;
+		width: 50%;
 	}
 
 	.teams__label {
