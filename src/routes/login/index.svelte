@@ -1,24 +1,18 @@
 <script context="module" lang="ts">
-	export const load: Load = ({ session, props }) => {
-		if (session.user) {
-			return {
-				status: 302,
-				redirect: '/dashboard',
-			}
-		}
+    import authStore from '../../stores/authStore';
 
-		return { props }
-	}
+	authStore.subscribe(async ({ isLoggedIn }) => {
+		if (isLoggedIn) {
+			await goto('/dashboard');
+		}
+	});
 </script>
 
 <script lang="ts">
-	import { app } from "../../config/firebase";
-	import { getAuth } from "firebase/auth";
-	import { signInWithRedirect, GoogleAuthProvider, getRedirectResult } from "firebase/auth";
-	import { onMount } from 'svelte';
+	import { app } from '../../config/firebase';
+	import { getAuth } from 'firebase/auth';
+	import { signInWithRedirect, GoogleAuthProvider } from 'firebase/auth';
 	import { goto } from '$app/navigation';
-	import { session } from '$app/stores'
-	import type { Load } from '@sveltejs/kit'
 
 	const auth = getAuth(app);
 
@@ -27,19 +21,6 @@
 		const provider = new GoogleAuthProvider();
 		await signInWithRedirect(auth, provider);
 	}
-
-	onMount(async () => {
-		// TODO check if already logged in
-
-		const result = await getRedirectResult(auth);
-		if (result) {
-			// This is the signed-in user
-			console.log('result:', result);
-			// TODO add user to session somehow?
-			$session.user = result.user;
-			goto('/dashboard');
-		}
-	});
 </script>
 
 <h1>Sign in</h1>
