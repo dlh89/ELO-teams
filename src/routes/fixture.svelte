@@ -25,6 +25,9 @@
     import { fade } from 'svelte/transition';
     import { crossfade } from 'svelte/transition';
     import { flip } from 'svelte/animate';
+    import { teamsPicked } from '../stores/teamsStore';
+    import Teams from '../components/Teams.svelte';
+    import { fisherYatesShuffle } from '../lib/helpers';
 
     const [send, receive] = crossfade({
         duration: 400,
@@ -67,6 +70,21 @@
     function playerSelect(uid, isPlaying) {
         players[uid - 1].isPlaying = isPlaying;
     }
+
+    function handleSortTeams() {
+        let shuffledPlayers;
+        shuffledPlayers = fisherYatesShuffle(selectedPlayers);
+
+		let team;
+
+        // Sort randomly for now
+		shuffledPlayers.forEach(function(player, i) {
+			team = i % 2 ? 'a' : 'b';
+			player.team = team;
+		});
+
+        teamsPicked.set(true);
+    }
 </script>
 
 <h1>New Fixture</h1>
@@ -98,6 +116,10 @@
         {/if}
     </div>
 </div>
+{#if !$teamsPicked}
+    <button on:click="{handleSortTeams}">Sort teams</button>
+{/if}
+<Teams teamsPlayers={selectedPlayers} />
 
 <style>
     .player-selection {

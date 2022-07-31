@@ -1,12 +1,12 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
+    import { teamsPicked } from '../stores/teamsStore';
 	export let teamsPlayers;
-	export let teamsPicked;
 
 	const dispatch = createEventDispatcher();
 
 	function modifyPlayerPool() {
-		dispatch('modifyPlayerPool');
+		teamsPicked.set(false);
 	}
 
 	function openRecordResults() {
@@ -14,7 +14,7 @@
 	}
 </script>
 
-{#if teamsPicked}
+{#if $teamsPicked}
 	<div class="teams">
 		<div class="teams__team">
 			<div class="teams__label">Team A</div>

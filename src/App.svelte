@@ -1,7 +1,7 @@
 <script>
 	import AddPlayer from './AddPlayer.svelte';
 	import PlayerSelection from './PlayerSelection.svelte';
-	import Teams from './Teams.svelte';
+	import Teams from './components/Teams.svelte';
 	import RecordResults from './RecordResults.svelte';
 	import Modal, {getModal} from './Modal.svelte'
 	import CalculateElo from './inc/CalculateElo.js';
