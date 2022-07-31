@@ -95,7 +95,7 @@
             <div>
                 {#each playerPool as player (player)}
                     <label class="block-label" for="{player.uid}" in:receive out:send animate:flip>
-                        <input type="checkbox" name="{player.uid}" id="{player.uid}" on:change={() => playerSelect(player.uid, true)}>
+                        <input type="checkbox" name="{player.uid}" id="{player.uid}" on:change={() => playerSelect(player.uid, true)} disabled="{$teamsPicked}">
                         {player.name} ({player.elo})
                     </label>
                 {/each}
@@ -108,7 +108,7 @@
             <div>
                 {#each selectedPlayers as player (player)}
                     <label class="block-label" for="{player.uid}" in:receive out:send animate:flip>
-                        <input type="checkbox" name="{player.uid}" id="{player.uid}" checked on:change={() => playerSelect(player.uid, false)}>
+                        <input type="checkbox" name="{player.uid}" id="{player.uid}" checked on:change={() => playerSelect(player.uid, false)} disabled="{$teamsPicked}">
                         {player.name} ({player.elo})
                     </label>
                 {/each}
