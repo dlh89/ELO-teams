@@ -116,7 +116,7 @@
         {/if}
     </div>
 </div>
-{#if !$teamsPicked}
+{#if !$teamsPicked && selectedPlayers.length}
     <button on:click="{handleSortTeams}">Sort teams</button>
 {/if}
 <Teams teamsPlayers={selectedPlayers} />
