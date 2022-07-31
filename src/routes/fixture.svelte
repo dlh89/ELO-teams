@@ -73,7 +73,7 @@
 <div class="player-selection">
     <div class="players-container" >
         {#if playerPool.length }
-            <div class="heading-2" transition:fade>Player Pool</div>
+            <div class="heading-2" transition:fade|local>Player Pool</div>
             <div>
                 {#each playerPool as player (player)}
                     <label class="block-label" for="{player.uid}" in:receive out:send animate:flip>
@@ -86,7 +86,7 @@
     </div>
     <div class="players-container" >
         {#if selectedPlayers.length }
-            <div class="heading-2" transition:fade>Active Players</div>
+            <div class="heading-2" transition:fade|local>Active Players</div>
             <div>
                 {#each selectedPlayers as player (player)}
                     <label class="block-label" for="{player.uid}" in:receive out:send animate:flip>
