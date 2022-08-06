@@ -30,7 +30,7 @@
     import { getRandomTeams } from '../lib/helpers';
 
     const [send, receive] = crossfade({
-        duration: 400,
+        duration: 200,
     });
 
 	let uid = 1;
