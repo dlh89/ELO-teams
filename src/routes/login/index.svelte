@@ -23,5 +23,7 @@
 	}
 </script>
 
-<h1>Sign in</h1>
-<button on:click="{handleSignIn}">Sign in with Google</button>
+<div class="row">
+	<h1>Sign in</h1>
+	<button on:click="{handleSignIn}">Sign in with Google</button>
+</div>

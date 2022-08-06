@@ -26,18 +26,27 @@
 </script>
 
 <nav>
-    <ul>
-        {#if !$authStore.isLoggedIn}
-            <li><a href="/">Home</a></li>
-            <li><a href="/login">Login</a></li>
-        {:else}
-            <li><a href="/dashboard">Dashboard</a></li>
-            <li><a href="/fixture">Create fixture</a></li>
-            <li><a href="/players">Edit players</a></li>
+    <div class="row">
+        <ul>
+            {#if !$authStore.isLoggedIn}
+                <li><a href="/">Home</a></li>
+                <li><a href="/login">Login</a></li>
+            {:else}
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/fixture">Create fixture</a></li>
+                <li><a href="/players">Edit players</a></li>
+            {/if}
+        </ul>
+        {#if $authStore.isLoggedIn}
+            <button on:click="{handleLogout}">Logout</button>
         {/if}
-    </ul>
-    {#if $authStore.isLoggedIn}
-        <button on:click="{handleLogout}">Logout</button>
-    {/if}
+    </div>
 </nav>
 <slot></slot>
+
+<style>
+    :global(.row) {
+        max-width: 920px;
+        margin: 0 auto;
+    }
+</style>

@@ -87,39 +87,41 @@
     }
 </script>
 
-<h1>New Fixture</h1>
-<div class="player-selection">
-    <div class="players-container" >
-        {#if playerPool.length }
-            <div class="heading-2" transition:fade|local>Player Pool</div>
-            <div>
-                {#each playerPool as player (player)}
-                    <label class="block-label" for="{player.uid}" in:receive out:send animate:flip>
-                        <input type="checkbox" name="{player.uid}" id="{player.uid}" on:change={() => playerSelect(player.uid, true)} disabled="{$teamsPicked}">
-                        {player.name} ({player.elo})
-                    </label>
-                {/each}
-            </div>
-        {/if}
+<div class="row">
+    <h1>New Fixture</h1>
+    <div class="player-selection">
+        <div class="players-container" >
+            {#if playerPool.length }
+                <div class="heading-2" transition:fade|local>Player Pool</div>
+                <div>
+                    {#each playerPool as player (player)}
+                        <label class="block-label" for="{player.uid}" in:receive out:send animate:flip>
+                            <input type="checkbox" name="{player.uid}" id="{player.uid}" on:change={() => playerSelect(player.uid, true)} disabled="{$teamsPicked}">
+                            {player.name} ({player.elo})
+                        </label>
+                    {/each}
+                </div>
+            {/if}
+        </div>
+        <div class="players-container" >
+            {#if selectedPlayers.length }
+                <div class="heading-2" transition:fade|local>Active Players</div>
+                <div>
+                    {#each selectedPlayers as player (player)}
+                        <label class="block-label" for="{player.uid}" in:receive out:send animate:flip>
+                            <input type="checkbox" name="{player.uid}" id="{player.uid}" checked on:change={() => playerSelect(player.uid, false)} disabled="{$teamsPicked}">
+                            {player.name} ({player.elo})
+                        </label>
+                    {/each}
+                </div>
+            {/if}
+        </div>
     </div>
-    <div class="players-container" >
-        {#if selectedPlayers.length }
-            <div class="heading-2" transition:fade|local>Active Players</div>
-            <div>
-                {#each selectedPlayers as player (player)}
-                    <label class="block-label" for="{player.uid}" in:receive out:send animate:flip>
-                        <input type="checkbox" name="{player.uid}" id="{player.uid}" checked on:change={() => playerSelect(player.uid, false)} disabled="{$teamsPicked}">
-                        {player.name} ({player.elo})
-                    </label>
-                {/each}
-            </div>
-        {/if}
-    </div>
+    {#if !$teamsPicked && selectedPlayers.length}
+        <button on:click="{handleSortTeams}">Sort teams</button>
+    {/if}
+    <Teams teamsPlayers={selectedPlayers} />
 </div>
-{#if !$teamsPicked && selectedPlayers.length}
-    <button on:click="{handleSortTeams}">Sort teams</button>
-{/if}
-<Teams teamsPlayers={selectedPlayers} />
 
 <style>
     .player-selection {

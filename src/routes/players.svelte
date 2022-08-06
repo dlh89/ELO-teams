@@ -21,4 +21,6 @@
 	}
 </script>
 
-<h1>Players</h1>
+<div class="row">
+    <h1>Players</h1>
+</div>
