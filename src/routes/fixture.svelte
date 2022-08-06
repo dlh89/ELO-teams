@@ -27,7 +27,7 @@
     import { flip } from 'svelte/animate';
     import { teamsPicked } from '../stores/teamsStore';
     import Teams from '../components/Teams.svelte';
-    import { fisherYatesShuffle } from '../lib/helpers';
+    import { getRandomTeams } from '../lib/helpers';
 
     const [send, receive] = crossfade({
         duration: 400,
@@ -60,7 +60,7 @@
 		},
 	];
 
-	$: playerPool = players.filter(player => !player.isPlaying);
+    $: playerPool = players.filter(player => !player.isPlaying);
 	$: selectedPlayers = players.filter(player => player.isPlaying);
 
     /**
@@ -72,17 +72,14 @@
     }
 
     function handleSortTeams() {
-        let shuffledPlayers;
-        shuffledPlayers = fisherYatesShuffle(selectedPlayers);
-
-		let team;
-
         // Sort randomly for now
-		shuffledPlayers.forEach(function(player, i) {
-			team = i % 2 ? 'a' : 'b';
-			player.team = team;
+        const randomTeams = getRandomTeams(selectedPlayers.length);
+
+		selectedPlayers.forEach(function(player, i) {
+			player.team = randomTeams[i];
 		});
 
+        players = [...players];
         teamsPicked.set(true);
     }
 </script>
@@ -120,7 +117,7 @@
     {#if !$teamsPicked && selectedPlayers.length}
         <button on:click="{handleSortTeams}">Sort teams</button>
     {/if}
-    <Teams teamsPlayers={selectedPlayers} />
+    <Teams teamsPlayers={selectedPlayers} on:click={handleSortTeams} />
 </div>
 
 <style>

@@ -20,4 +20,29 @@ const fisherYatesShuffle = (items) => {
     return items;
 }
 
-export { fisherYatesShuffle }
+/**
+ * Randomly sort an equal (or as close as possible) number of 'a' and 'b' values
+ * 
+ * @param {number} playerCount Number of players to sort into teams
+ * @returns {Array} Randomly sorted array with values of a/b
+ */
+const getRandomTeams = (playerCount) => {
+    let teams = [];
+    let aTotal = Math.round(playerCount / 2);
+    let aCount = 0;
+
+    for (let i = 0; i < playerCount; i++) {
+        if (aCount < aTotal) {
+            aCount++;
+            teams.push('a');
+        } else {
+            teams.push('b');
+        }
+    }
+
+    teams = fisherYatesShuffle(teams);
+
+    return teams;
+}
+
+export { fisherYatesShuffle, getRandomTeams }
