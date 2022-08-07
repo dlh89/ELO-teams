@@ -28,37 +28,26 @@
     import { teamsPicked } from '../stores/teamsStore';
     import Teams from '../components/Teams.svelte';
     import { getRandomTeams } from '../lib/helpers';
+    import { database } from '../config/firebase.js';
+    import { ref, onValue } from "firebase/database";
 
     const [send, receive] = crossfade({
         duration: 200,
     });
 
-	let uid = 1;
+	let players = [];
+    const playersRef = ref(database, 'players');
 
-    // TODO get players from database
-	let players = [
-		{
-			uid: uid++,
-			name: 'David H',
-			isPlaying: false,
-			team: null,
-			elo: 1000,
-		},
-		{
-			uid: uid++,
-			name: 'Max',
-			isPlaying: false,
-			team: null,
-			elo: 2000,
-		},
-		{
-			uid: uid++,
-			name: 'Matt',
-			isPlaying: false,
-			team: null,
-			elo: 1500
-		},
-	];
+    onValue(playersRef, (snapshot) => {
+        const data = snapshot.val();
+
+        players = Object.keys(data).map((player, i) => {
+            data[player].uid = i;
+            data[player].isPlaying = false;
+            data[player].team = null;
+            return data[player];
+        });
+    });
 
     $: playerPool = players.filter(player => !player.isPlaying);
 	$: selectedPlayers = players.filter(player => player.isPlaying);
@@ -68,7 +57,7 @@
      * @param {boolean} isPlaying
      */
     function playerSelect(uid, isPlaying) {
-        players[uid - 1].isPlaying = isPlaying;
+        players[uid].isPlaying = isPlaying;
     }
 
     function handleSortTeams() {
