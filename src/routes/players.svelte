@@ -2,6 +2,8 @@
     import type { Load } from '@sveltejs/kit';
     import authStore from '../stores/authStore';
 	import CalculateElo from '../lib/CalculateElo.js';
+    import { database } from '../config/firebase.js';
+    import { ref, set, onValue } from "firebase/database";
 
     export const load: Load = ({ props }) => {
         let shouldRedirect = false;
@@ -23,32 +25,15 @@
 </script>
 
 <script>
-	let uid = 1;
+    let players = [];
+	let uid;
+    const playersRef = ref(database, 'players');
 
-    // TODO get players from database
-	let players = [
-		{
-			uid: uid++,
-			name: 'David H',
-			isPlaying: false,
-			team: null,
-			elo: 1000,
-		},
-		{
-			uid: uid++,
-			name: 'Max',
-			isPlaying: false,
-			team: null,
-			elo: 2000,
-		},
-		{
-			uid: uid++,
-			name: 'Matt',
-			isPlaying: false,
-			team: null,
-			elo: 1500
-		},
-	];
+    onValue(playersRef, (snapshot) => {
+        const data = snapshot.val();
+        players = data;
+        uid = data && data.length ? data.length : 0;
+    });
 
 	const calculateElo = new CalculateElo();
 
@@ -56,17 +41,11 @@
         e.preventDefault();
 		const formData = new FormData(e.target);
 
-        // TODO save to database
-		players = [
-			...players,
-			{ 
-				uid: uid++,
-				name: formData.get('playerName'),
-				isPlaying: false,
-				team: null,
-				elo: calculateElo.startingElo,
-			}
-		];
+        set(ref(database, 'players/' + uid++), {
+            name: formData.get('playerName'),
+            elo: calculateElo.startingElo,
+        });
+
 		e.target.reset();
 	}
 </script>
@@ -81,13 +60,15 @@
         </form>
     </div>
     <div>
-        {#if players.length }
+        {#if players && players.length }
             <div>
                 <ul>
-                    {#each players as player (player)}
-                        <li>
-                            <a href="/players/{player.uid}">{player.name} ({player.elo})</a>
-                        </li>
+                    {#each players as {name, elo}, i}
+                        {#if player}
+                            <li>
+                                <a href="/players/{i}">{name} ({elo})</a>
+                            </li>
+                        {/if}
                     {/each}
                 </ul>
             </div>
