@@ -49,4 +49,10 @@
         max-width: 920px;
         margin: 0 auto;
     }
+
+    :global(.heading-2) {
+        font-size: 24px;
+		font-weight: 800;
+		margin-bottom: 18px;
+    }
 </style>
