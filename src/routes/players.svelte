@@ -82,13 +82,14 @@
     </div>
     <div>
         {#if players.length }
-            <div class="heading-2">Player Pool</div>
             <div>
-                {#each players as player (player)}
-                    <div>
-                        <a href="/players/{player.uid}">{player.name} ({player.elo})</a>
-                    </div>
-                {/each}
+                <ul>
+                    {#each players as player (player)}
+                        <li>
+                            <a href="/players/{player.uid}">{player.name} ({player.elo})</a>
+                        </li>
+                    {/each}
+                </ul>
             </div>
         {/if}
     </div>
