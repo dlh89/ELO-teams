@@ -30,13 +30,15 @@
 
 	onValue(playersRef, (snapshot) => {
 		const data = snapshot.val();
-		const playerIds = Object.keys(data);
-		players = playerIds.map((id) => {
-			return {
-				id,
-				...data[id],
-			};
-		});
+		if (data) {
+			const playerIds = Object.keys(data);
+			players = playerIds.map((id) => {
+				return {
+					id,
+					...data[id],
+				};
+			});
+		}
 	});
 
 	const calculateElo = new CalculateElo();

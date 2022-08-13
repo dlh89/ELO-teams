@@ -41,15 +41,17 @@
 	onValue(playersRef, (snapshot) => {
 		const data = snapshot.val();
 
-		const playerIds = Object.keys(data);
-		players = playerIds.map((id) => {
-			return {
-				id,
-				...data[id],
-				isPlaying: false,
-				team: null,
-			};
-		});
+		if (data) {
+			const playerIds = Object.keys(data);
+			players = playerIds.map((id) => {
+				return {
+					id,
+					...data[id],
+					isPlaying: false,
+					team: null,
+				};
+			});
+		}
 	});
 
 	$: playerPool = players.filter((player) => !player.isPlaying);
