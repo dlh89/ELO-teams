@@ -1,8 +1,8 @@
 <script context="module" lang="ts">
     import type { Load } from '@sveltejs/kit';
-    import authStore from '../stores/authStore';
-	import CalculateElo from '../lib/CalculateElo.js';
-    import { database } from '../config/firebase.js';
+    import authStore from '../../stores/authStore';
+	import CalculateElo from '../../lib/CalculateElo.js';
+    import { database } from '../../config/firebase.js';
     import { ref, set, onValue } from "firebase/database";
 
     export const load: Load = ({ props }) => {
@@ -64,7 +64,7 @@
             <div>
                 <ul>
                     {#each players as {name, elo}, i}
-                        {#if player}
+                        {#if name}
                             <li>
                                 <a href="/players/{i}">{name} ({elo})</a>
                             </li>
