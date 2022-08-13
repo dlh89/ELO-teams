@@ -4,6 +4,7 @@
 	import CalculateElo from '../../lib/CalculateElo.js';
 	import { database } from '../../config/firebase.js';
 	import { ref, push, onValue } from 'firebase/database';
+	import { page } from '$app/stores';
 
 	export const load: Load = ({ props }) => {
 		let shouldRedirect = false;
@@ -44,7 +45,6 @@
 	const calculateElo = new CalculateElo();
 
 	function handleSubmit(e) {
-		e.preventDefault();
 		const formData = new FormData(e.target);
 
 		push(ref(database, 'players/'), {
@@ -54,12 +54,19 @@
 
 		e.target.reset();
 	}
+
+	const notice = $page.url.searchParams.get('notice');
 </script>
 
 <div class="row">
+	{#if notice}
+		{#if notice === 'player-delete'}
+			<div class="notice">Player deleted successfully.</div>
+		{/if}
+	{/if}
 	<h1>Players</h1>
 	<div>
-		<form on:submit={handleSubmit}>
+		<form on:submit|preventDefault={handleSubmit}>
 			<label for="player js-add-player-btn">Add a player:</label>
 			<input
 				type="text"

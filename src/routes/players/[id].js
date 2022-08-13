@@ -13,7 +13,10 @@ export async function get({ params }) {
 		return {
 			status: 200,
 			headers: {},
-			body: { player },
+			body: {
+				id: params.id,
+				player,
+			},
 		};
 	}
 
