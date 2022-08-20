@@ -25,7 +25,6 @@
 	import { fade } from 'svelte/transition';
 	import { crossfade } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
-	import { teamsPicked } from '../stores/teamsStore';
 	import Teams from '../components/Teams.svelte';
 	import { getRandomTeams } from '../lib/helpers';
 	import { database } from '../config/firebase.js';
@@ -35,6 +34,7 @@
 		duration: 200,
 	});
 
+	let teamsPicked = false;
 	let players = [];
 	const playersRef = ref(database, 'players');
 
@@ -78,7 +78,11 @@
 		});
 
 		players = [...players];
-		teamsPicked.set(true);
+		teamsPicked = true;
+	}
+
+	function modifyPlayerPool() {
+		teamsPicked = false;
 	}
 </script>
 
@@ -102,7 +106,7 @@
 								name={player.id}
 								id={player.id}
 								on:change={() => playerSelect(player.id, true)}
-								disabled={$teamsPicked}
+								disabled={teamsPicked}
 							/>
 							{player.name} ({player.elo})
 						</label>
@@ -130,7 +134,7 @@
 								id={player.id}
 								checked
 								on:change={() => playerSelect(player.id, false)}
-								disabled={$teamsPicked}
+								disabled={teamsPicked}
 							/>
 							{player.name} ({player.elo})
 						</label>
@@ -139,10 +143,15 @@
 			{/if}
 		</div>
 	</div>
-	{#if !$teamsPicked && selectedPlayers.length > 1}
+	{#if !teamsPicked && selectedPlayers.length > 1}
 		<button on:click={handleSortTeams}>Sort teams</button>
 	{/if}
-	<Teams teamsPlayers={selectedPlayers} on:click={handleSortTeams} />
+	<Teams
+		teamsPlayers={selectedPlayers}
+		on:click={handleSortTeams}
+		{teamsPicked}
+		on:modifyPlayerPool={modifyPlayerPool}
+	/>
 </div>
 
 <style>

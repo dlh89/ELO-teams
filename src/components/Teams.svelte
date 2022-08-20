@@ -1,12 +1,12 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
-    import { teamsPicked } from '../stores/teamsStore';
 	export let teamsPlayers;
+	export let teamsPicked;
 
 	const dispatch = createEventDispatcher();
 
 	function modifyPlayerPool() {
-		teamsPicked.set(false);
+		dispatch('modifyPlayerPool');
 	}
 
 	function openRecordResults() {
@@ -14,17 +14,17 @@
 	}
 </script>
 
-{#if $teamsPicked}
+{#if teamsPicked}
 	<div class="teams">
 		<div class="teams__team">
 			<div class="teams__label">Team A</div>
 			<div class="teams__playerbox">
 				<ul>
-				{#each teamsPlayers as player}
-					{#if player.team === 'a'}
-						<li>{player.name} ({player.elo})</li>
-					{/if}
-				{/each}
+					{#each teamsPlayers as player}
+						{#if player.team === 'a'}
+							<li>{player.name} ({player.elo})</li>
+						{/if}
+					{/each}
 				</ul>
 			</div>
 		</div>
@@ -32,18 +32,18 @@
 			<div class="teams__label">Team B</div>
 			<div class="teams__playerbox">
 				<ul>
-				{#each teamsPlayers as player}
-					{#if player.team === 'b'}
-						<li>{player.name} ({player.elo})</li>
-					{/if}
-				{/each}
+					{#each teamsPlayers as player}
+						{#if player.team === 'b'}
+							<li>{player.name} ({player.elo})</li>
+						{/if}
+					{/each}
 				</ul>
 			</div>
 		</div>
 	</div>
 	<button on:click>Reshuffle teams</button>
 	<button on:click={modifyPlayerPool}>Edit players</button>
-	<button on:click={openRecordResults}>Record results</button>
+	<button on:click={openRecordResults}>Save fixture</button>
 {/if}
 
 <style>
