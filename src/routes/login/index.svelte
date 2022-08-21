@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-    import authStore from '../../stores/authStore';
+	import authStore from '../../stores/authStore';
 
 	authStore.subscribe(async ({ isLoggedIn }) => {
 		if (isLoggedIn) {
@@ -25,5 +25,5 @@
 
 <div class="row">
 	<h1>Sign in</h1>
-	<button on:click="{handleSignIn}">Sign in with Google</button>
+	<button on:click={handleSignIn}>Sign in with Google</button>
 </div>

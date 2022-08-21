@@ -1,28 +1,8 @@
 <script context="module" lang="ts">
-	import type { Load } from '@sveltejs/kit';
-	import authStore from '../../stores/authStore';
 	import CalculateElo from '../../lib/CalculateElo.js';
 	import { database } from '../../config/firebase.js';
 	import { ref, push, onValue } from 'firebase/database';
 	import { page } from '$app/stores';
-
-	export const load: Load = ({ props }) => {
-		let shouldRedirect = false;
-		authStore.subscribe(async ({ isLoggedIn }) => {
-			if (!isLoggedIn) {
-				shouldRedirect = true;
-			}
-		});
-
-		if (shouldRedirect) {
-			return {
-				status: 302,
-				redirect: '/login',
-			};
-		}
-
-		return { props };
-	};
 </script>
 
 <script>
