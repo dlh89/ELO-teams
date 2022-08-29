@@ -9,8 +9,6 @@
 
 	onMount(() => {
 		auth.onAuthStateChanged((user) => {
-			console.log('user:');
-			console.log(user);
 			if (user) {
 				authStore.set({
 					isLoggedIn: user ? true : false,
