@@ -15,8 +15,9 @@
 		duration: 200,
 	});
 
-	const currentDateString = getCurrentDateString();
-	const currentTimeString = getCurrentTimeString();
+	const nowDate = new Date().valueOf();
+	let date = getCurrentDateString(nowDate);
+	let time = getCurrentTimeString(nowDate);
 
 	let teamsPicked = false;
 	let players = [];
@@ -78,19 +79,30 @@
 
 	function saveFixture() {
 		// TODO if it already exists we need to overwrite?
+
+		const dateTime = new Date(`${date} ${time}`).valueOf();
+
 		push(ref(database, 'fixtures/'), {
 			players: selectedPlayers,
-			dateTime: '',
+			dateTime,
 		});
 
 		// TODO display a notice?
+	}
+
+	function handleDateChange(e) {
+		date = e.target.value;
+	}
+
+	function handleTimeChange(e) {
+		time = e.target.value;
 	}
 </script>
 
 <div class="row">
 	<h1>New Fixture</h1>
-	<input type="date" value={currentDateString} min={currentDateString} />
-	<input type="time" value={currentTimeString} />
+	<input type="date" value={date} min={date} on:change={handleDateChange} />
+	<input type="time" value={time} on:change={handleTimeChange} />
 	<div class="player-selection">
 		<div class="players-container">
 			{#if playerPool.length}

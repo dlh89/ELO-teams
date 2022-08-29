@@ -46,23 +46,23 @@ const getRandomTeams = (playerCount) => {
 	return teams;
 };
 
-const getCurrentDateString = () => {
+const getCurrentDateString = (date) => {
 	// 1970-10-31 format
-	const nowDate = new Date();
 
-	const currentDateString = `${nowDate.getFullYear()}-${String(
-		nowDate.getMonth() + 1
-	).padStart(2, '0')}-${nowDate.getDate()}`;
+	const dateObject = new Date(date);
+	const currentDateString = `${dateObject.getFullYear()}-${String(
+		dateObject.getMonth() + 1
+	).padStart(2, '0')}-${dateObject.getDate()}`;
 
 	return currentDateString;
 };
 
-const getCurrentTimeString = () => {
+const getCurrentTimeString = (date) => {
 	// 00:00:00 format
-	const nowDate = new Date();
 
-	const currentTimeString = `${nowDate.getHours()}:${nowDate.getMinutes()}:${String(
-		nowDate.getSeconds()
+	const dateObject = new Date(date);
+	const currentTimeString = `${dateObject.getHours()}:${dateObject.getMinutes()}:${String(
+		dateObject.getSeconds()
 	).padStart(2, '0')}`;
 
 	return currentTimeString;
