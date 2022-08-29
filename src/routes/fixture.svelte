@@ -47,12 +47,19 @@
 	}
 
 	function handleSortTeams() {
-		// Sort randomly for now
-		const randomTeams = getRandomTeams(selectedPlayers.length);
+		let teamsHaveChanged = false;
 
-		selectedPlayers.forEach(function (player, i) {
-			player.team = randomTeams[i];
-		});
+		while (!teamsHaveChanged) {
+			// Sort randomly for now
+			const randomTeams = getRandomTeams(selectedPlayers.length);
+
+			selectedPlayers.forEach(function (player, i) {
+				if (player.team !== randomTeams[i]) {
+					teamsHaveChanged = true;
+				}
+				player.team = randomTeams[i];
+			});
+		}
 
 		players = [...players];
 		teamsPicked = true;
