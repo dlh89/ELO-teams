@@ -1,10 +1,7 @@
 <script>
 	import { database } from '../../config/firebase';
 	import { ref, onValue } from 'firebase/database';
-	import {
-		getCurrentDateString,
-		getCurrentTimeString,
-	} from '../../lib/helpers';
+	import { getDateString, getTimeString } from '../../lib/helpers';
 
 	let fixtures = [];
 	const fixturesRef = ref(database, '/fixtures');
@@ -32,14 +29,22 @@
 	<a href="/fixtures/fixture">New fixture</a>
 
 	<h2>Upcoming</h2>
-	{#each fixtures.filter((fixture) => fixture.dateTime >= nowTimestamp) as fixture (fixture)}
-		{getCurrentDateString(fixture.dateTime)}
-		{getCurrentTimeString(fixture.dateTime)}
-	{/each}
+	<ul>
+		{#each fixtures.filter((fixture) => fixture.dateTime >= nowTimestamp) as fixture (fixture)}
+			<li>
+				{getDateString(fixture.dateTime)}
+				{getTimeString(fixture.dateTime)}
+			</li>
+		{/each}
+	</ul>
 
 	<h2>Previous</h2>
-	{#each fixtures.filter((fixture) => fixture.dateTime < nowTimestamp) as fixture (fixture)}
-		{getCurrentDateString(fixture.dateTime)}
-		{getCurrentTimeString(fixture.dateTime)}
-	{/each}
+	<ul>
+		{#each fixtures.filter((fixture) => fixture.dateTime < nowTimestamp) as fixture (fixture)}
+			<li>
+				{getDateString(fixture.dateTime)}
+				{getTimeString(fixture.dateTime)}
+			</li>
+		{/each}
+	</ul>
 </div>

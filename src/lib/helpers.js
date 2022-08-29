@@ -46,7 +46,7 @@ const getRandomTeams = (playerCount) => {
 	return teams;
 };
 
-const getCurrentDateString = (date) => {
+const getDateString = (date) => {
 	// 1970-10-31 format
 
 	const dateObject = new Date(date);
@@ -57,7 +57,7 @@ const getCurrentDateString = (date) => {
 	return currentDateString;
 };
 
-const getCurrentTimeString = (date) => {
+const getTimeString = (date) => {
 	// 00:00:00 format
 
 	const dateObject = new Date(date);
@@ -68,9 +68,4 @@ const getCurrentTimeString = (date) => {
 	return currentTimeString;
 };
 
-export {
-	fisherYatesShuffle,
-	getRandomTeams,
-	getCurrentDateString,
-	getCurrentTimeString,
-};
+export { fisherYatesShuffle, getRandomTeams, getDateString, getTimeString };

@@ -5,8 +5,8 @@
 	import Teams from '../../components/Teams.svelte';
 	import {
 		getRandomTeams,
-		getCurrentDateString,
-		getCurrentTimeString,
+		getDateString,
+		getTimeString,
 	} from '../../lib/helpers';
 	import { database } from '../../config/firebase.js';
 	import { ref, push, onValue } from 'firebase/database';
@@ -16,8 +16,8 @@
 	});
 
 	const nowDate = new Date().valueOf();
-	let date = getCurrentDateString(nowDate);
-	let time = getCurrentTimeString(nowDate);
+	let date = getDateString(nowDate);
+	let time = getTimeString(nowDate);
 
 	let teamsPicked = false;
 	let players = [];
