@@ -2,14 +2,21 @@
 	import { fade } from 'svelte/transition';
 	import { crossfade } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
-	import Teams from '../components/Teams.svelte';
-	import { getRandomTeams } from '../lib/helpers';
-	import { database } from '../config/firebase.js';
-	import { ref, onValue } from 'firebase/database';
+	import Teams from '../../components/Teams.svelte';
+	import {
+		getRandomTeams,
+		getCurrentDateString,
+		getCurrentTimeString,
+	} from '../../lib/helpers';
+	import { database } from '../../config/firebase.js';
+	import { ref, push, onValue } from 'firebase/database';
 
 	const [send, receive] = crossfade({
 		duration: 200,
 	});
+
+	const currentDateString = getCurrentDateString();
+	const currentTimeString = getCurrentTimeString();
 
 	let teamsPicked = false;
 	let players = [];
@@ -68,10 +75,22 @@
 	function modifyPlayerPool() {
 		teamsPicked = false;
 	}
+
+	function saveFixture() {
+		// TODO if it already exists we need to overwrite?
+		push(ref(database, 'fixtures/'), {
+			players: selectedPlayers,
+			dateTime: '',
+		});
+
+		// TODO display a notice?
+	}
 </script>
 
 <div class="row">
 	<h1>New Fixture</h1>
+	<input type="date" value={currentDateString} min={currentDateString} />
+	<input type="time" value={currentTimeString} />
 	<div class="player-selection">
 		<div class="players-container">
 			{#if playerPool.length}
@@ -135,6 +154,7 @@
 		on:click={handleSortTeams}
 		{teamsPicked}
 		on:modifyPlayerPool={modifyPlayerPool}
+		on:saveFixture={saveFixture}
 	/>
 </div>
 
