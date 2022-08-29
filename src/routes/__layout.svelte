@@ -38,7 +38,7 @@
 				<li><a href="/login">Login</a></li>
 			{:else}
 				<li><a href="/dashboard">Dashboard</a></li>
-				<li><a href="/fixture">Create fixture</a></li>
+				<li><a href="/fixtures">Fixtures</a></li>
 				<li><a href="/players">Edit players</a></li>
 			{/if}
 		</ul>
