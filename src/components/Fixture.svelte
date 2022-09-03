@@ -2,41 +2,15 @@
 	import { fade } from 'svelte/transition';
 	import { crossfade } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
-	import Teams from '../../components/Teams.svelte';
-	import {
-		getRandomTeams,
-		getDateString,
-		getTimeString,
-	} from '../../lib/helpers';
-	import { database } from '../../config/firebase.js';
-	import { ref, push, onValue } from 'firebase/database';
+	import Teams from '../components/Teams.svelte';
+	import { getRandomTeams } from '../lib/helpers';
+	import { database } from '../config/firebase.js';
+	import { ref, push } from 'firebase/database';
+
+	export let title, players, teamsPicked, date, time;
 
 	const [send, receive] = crossfade({
 		duration: 200,
-	});
-
-	const nowDate = new Date().valueOf();
-	let date = getDateString(nowDate);
-	let time = getTimeString(nowDate);
-
-	let teamsPicked = false;
-	let players = [];
-	const playersRef = ref(database, 'players');
-
-	onValue(playersRef, (snapshot) => {
-		const data = snapshot.val();
-
-		if (data) {
-			const playerIds = Object.keys(data);
-			players = playerIds.map((id) => {
-				return {
-					id,
-					...data[id],
-					isPlaying: false,
-					team: null,
-				};
-			});
-		}
 	});
 
 	$: playerPool = players.filter((player) => !player.isPlaying);
@@ -99,8 +73,8 @@
 	}
 </script>
 
-<div class="row">
-	<h1>New Fixture</h1>
+<div>
+	<h1>{title}</h1>
 	<input type="date" value={date} min={date} on:change={handleDateChange} />
 	<input type="time" value={time} on:change={handleTimeChange} />
 	<div class="player-selection">
