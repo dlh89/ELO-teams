@@ -14,6 +14,7 @@
 
 			fixtures = fixtureIds.map((id) => {
 				return {
+					id,
 					dateTime: data[id].dateTime,
 					players: data[id].players,
 				};
@@ -26,14 +27,16 @@
 
 <div class="row">
 	<h1>Fixtures</h1>
-	<a href="/fixtures/fixture">New fixture</a>
+	<a href="/fixtures/new">New fixture</a>
 
 	<h2>Upcoming</h2>
 	<ul>
 		{#each fixtures.filter((fixture) => fixture.dateTime >= nowTimestamp) as fixture (fixture)}
 			<li>
-				{getDateString(fixture.dateTime)}
-				{getTimeString(fixture.dateTime)}
+				<a href="/fixtures/{fixture.id}">
+					{getDateString(fixture.dateTime)}
+					{getTimeString(fixture.dateTime)}
+				</a>
 			</li>
 		{/each}
 	</ul>
@@ -42,8 +45,10 @@
 	<ul>
 		{#each fixtures.filter((fixture) => fixture.dateTime < nowTimestamp) as fixture (fixture)}
 			<li>
-				{getDateString(fixture.dateTime)}
-				{getTimeString(fixture.dateTime)}
+				<a href="/fixtures/{fixture.id}">
+					{getDateString(fixture.dateTime)}
+					{getTimeString(fixture.dateTime)}
+				</a>
 			</li>
 		{/each}
 	</ul>
