@@ -52,7 +52,7 @@ const getDateString = (date) => {
 	const dateObject = new Date(date);
 	const currentDateString = `${dateObject.getFullYear()}-${String(
 		dateObject.getMonth() + 1
-	).padStart(2, '0')}-${dateObject.getDate()}`;
+	).padStart(2, '0')}-${String(dateObject.getDate()).padStart(2, '0')}`;
 
 	return currentDateString;
 };
