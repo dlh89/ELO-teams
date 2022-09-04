@@ -32,6 +32,8 @@
 	{#if notice}
 		{#if notice === 'fixture-save'}
 			<div class="notice">Fixture saved successfully.</div>
+		{:else if notice === 'fixture-delete'}
+			<div class="notice">Fixture deleted.</div>
 		{/if}
 	{/if}
 	<h1>Fixtures</h1>
