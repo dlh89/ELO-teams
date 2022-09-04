@@ -50,6 +50,13 @@
 </script>
 
 <div class="row">
-	<Fixture title="Edit fixture" {date} {time} teamsPicked={true} {players} />
+	<Fixture
+		title="Edit fixture"
+		{date}
+		{time}
+		teamsPicked={true}
+		{players}
+		{id}
+	/>
 	<button on:click={handleDelete}>Delete fixture</button>
 </div>

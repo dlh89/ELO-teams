@@ -2,6 +2,7 @@
 	import { database } from '../../config/firebase';
 	import { ref, onValue } from 'firebase/database';
 	import { getDateString, getTimeString } from '../../lib/helpers';
+	import { page } from '$app/stores';
 
 	let fixtures = [];
 	const fixturesRef = ref(database, '/fixtures');
@@ -23,9 +24,16 @@
 	});
 
 	const nowTimestamp = new Date().valueOf();
+
+	const notice = $page.url.searchParams.get('notice');
 </script>
 
 <div class="row">
+	{#if notice}
+		{#if notice === 'fixture-save'}
+			<div class="notice">Fixture saved successfully.</div>
+		{/if}
+	{/if}
 	<h1>Fixtures</h1>
 	<a href="/fixtures/new">New fixture</a>
 

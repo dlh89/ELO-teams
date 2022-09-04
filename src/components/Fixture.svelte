@@ -5,9 +5,10 @@
 	import Teams from '../components/Teams.svelte';
 	import { getRandomTeams } from '../lib/helpers';
 	import { database } from '../config/firebase.js';
-	import { ref, push } from 'firebase/database';
+	import { ref, push, update } from 'firebase/database';
+	import { goto } from '$app/navigation';
 
-	export let title, players, teamsPicked, date, time;
+	export let title, players, teamsPicked, date, time, id;
 
 	const [send, receive] = crossfade({
 		duration: 200,
@@ -52,16 +53,21 @@
 	}
 
 	function saveFixture() {
-		// TODO if it already exists we need to overwrite?
-
 		const dateTime = new Date(`${date} ${time}`).valueOf();
 
-		push(ref(database, 'fixtures/'), {
-			players: selectedPlayers,
-			dateTime,
-		});
+		if (id) {
+			update(ref(database, `fixtures/${id}`), {
+				players: selectedPlayers,
+				dateTime,
+			});
+		} else {
+			push(ref(database, 'fixtures/'), {
+				players: selectedPlayers,
+				dateTime,
+			});
+		}
 
-		// TODO display a notice?
+		goto('/fixtures?notice=fixture-save');
 	}
 
 	function handleDateChange(e) {

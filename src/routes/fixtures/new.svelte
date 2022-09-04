@@ -31,5 +31,12 @@
 </script>
 
 <div class="row">
-	<Fixture title="New fixture" {date} {time} {teamsPicked} {players} />
+	<Fixture
+		title="New fixture"
+		{date}
+		{time}
+		{teamsPicked}
+		{players}
+		id={false}
+	/>
 </div>
