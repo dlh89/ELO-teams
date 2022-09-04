@@ -6,6 +6,7 @@
 
 	let fixtures = [];
 	const fixturesRef = ref(database, '/fixtures');
+	const nowTimestamp = new Date().valueOf();
 
 	onValue(fixturesRef, (snapshot) => {
 		const data = snapshot.val();
@@ -18,12 +19,11 @@
 					id,
 					dateTime: data[id].dateTime,
 					players: data[id].players,
+					isPast: nowTimestamp > data[id].dateTime ? true : false,
 				};
 			});
 		}
 	});
-
-	const nowTimestamp = new Date().valueOf();
 
 	const notice = $page.url.searchParams.get('notice');
 </script>
@@ -41,7 +41,7 @@
 
 	<h2>Upcoming</h2>
 	<ul>
-		{#each fixtures.filter((fixture) => fixture.dateTime >= nowTimestamp) as fixture (fixture)}
+		{#each fixtures.filter((fixture) => !fixture.isPast) as fixture (fixture)}
 			<li>
 				<a href="/fixtures/{fixture.id}">
 					{getDateString(fixture.dateTime)}
@@ -53,7 +53,7 @@
 
 	<h2>Previous</h2>
 	<ul>
-		{#each fixtures.filter((fixture) => fixture.dateTime < nowTimestamp) as fixture (fixture)}
+		{#each fixtures.filter((fixture) => fixture.isPast) as fixture (fixture)}
 			<li>
 				<a href="/fixtures/{fixture.id}">
 					{getDateString(fixture.dateTime)}
