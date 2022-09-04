@@ -1,11 +1,14 @@
 <script>
 	import { database } from '../../config/firebase';
-	import { ref, onValue } from 'firebase/database';
+	import { query, ref, onValue, orderByChild } from 'firebase/database';
 	import { getDateString, getTimeString } from '../../lib/helpers';
 	import { page } from '$app/stores';
 
 	let fixtures = [];
-	const fixturesRef = ref(database, '/fixtures');
+	const fixturesRef = query(
+		ref(database, '/fixtures'),
+		orderByChild('dateTime')
+	);
 	const nowTimestamp = new Date().valueOf();
 
 	onValue(fixturesRef, (snapshot) => {
@@ -22,6 +25,8 @@
 					isPast: nowTimestamp > data[id].dateTime ? true : false,
 				};
 			});
+
+			fixtures.sort((a, b) => b.dateTime - a.dateTime); // sort by date descending
 		}
 	});
 
