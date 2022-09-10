@@ -4,7 +4,6 @@
 	import { goto } from '$app/navigation';
 	import { getDateString, getTimeString } from '../../lib/helpers';
 	import Fixture from '../../components/Fixture.svelte';
-	import { claim_svg_element } from 'svelte/internal';
 
 	export let fixture, id;
 	let notice = '';
@@ -52,6 +51,7 @@
 <div class="row">
 	<Fixture
 		title="Edit fixture"
+		dateTime={fixture.dateTime}
 		{date}
 		{time}
 		teamsPicked={true}

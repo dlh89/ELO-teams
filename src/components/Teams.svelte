@@ -1,7 +1,8 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
-	export let teamsPlayers;
-	export let teamsPicked;
+	import RecordResults from './RecordResults.svelte';
+	import Modal, { getModal } from './Modal.svelte';
+	export let teamsPlayers, teamsPicked, isPassed;
 
 	const dispatch = createEventDispatcher();
 
@@ -11,6 +12,14 @@
 
 	function saveFixture() {
 		dispatch('saveFixture');
+	}
+
+	function openRecordResultsModal() {
+		getModal().open();
+	}
+
+	function recordResult(data) {
+		dispatch('recordResult', data.detail);
 	}
 </script>
 
@@ -44,6 +53,12 @@
 	<button on:click>Reshuffle teams</button>
 	<button on:click={modifyPlayerPool}>Edit players</button>
 	<button on:click={saveFixture}>Save fixture</button>
+	{#if isPassed}
+		<button on:click={openRecordResultsModal}>Record results</button>
+		<Modal>
+			<RecordResults on:recordResult={recordResult} />
+		</Modal>
+	{/if}
 {/if}
 
 <style>

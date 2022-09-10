@@ -8,7 +8,7 @@
 	import { ref, push, update } from 'firebase/database';
 	import { goto } from '$app/navigation';
 
-	export let title, players, teamsPicked, date, time, id;
+	export let dateTime, title, players, teamsPicked, date, time, id;
 
 	const [send, receive] = crossfade({
 		duration: 200,
@@ -70,6 +70,20 @@
 		goto('/fixtures?notice=fixture-save');
 	}
 
+	function recordResult(data) {
+		if (!id) {
+			return;
+		}
+
+		const result = {
+			winningTeam: data.detail.winningTeam,
+		};
+
+		update(ref(database, `fixtures/${id}`), {
+			result: result,
+		});
+	}
+
 	function handleDateChange(e) {
 		date = e.target.value;
 	}
@@ -77,6 +91,8 @@
 	function handleTimeChange(e) {
 		time = e.target.value;
 	}
+
+	const isPassed = new Date().valueOf() > dateTime;
 </script>
 
 <div>
@@ -143,10 +159,12 @@
 	{/if}
 	<Teams
 		teamsPlayers={selectedPlayers}
+		{isPassed}
 		on:click={handleSortTeams}
 		{teamsPicked}
 		on:modifyPlayerPool={modifyPlayerPool}
 		on:saveFixture={saveFixture}
+		on:recordResult={recordResult}
 	/>
 </div>
 
