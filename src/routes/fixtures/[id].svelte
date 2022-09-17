@@ -6,7 +6,6 @@
 	import Fixture from '../../components/Fixture.svelte';
 
 	export let fixture, id;
-	let notice = '';
 	let players = fixture.players;
 
 	const playersRef = ref(database, 'players');
@@ -44,13 +43,15 @@
 		}
 	}
 
+	const title = fixture.result ? 'View fixture' : 'Edit fixture';
 	const date = getDateString(fixture.dateTime);
 	const time = getTimeString(fixture.dateTime);
 </script>
 
 <div class="row">
 	<Fixture
-		title="Edit fixture"
+		{title}
+		result={fixture.result ?? false}
 		dateTime={fixture.dateTime}
 		{date}
 		{time}

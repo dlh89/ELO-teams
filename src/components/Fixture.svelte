@@ -9,7 +9,7 @@
 	import { goto } from '$app/navigation';
 	import { getModal } from './Modal.svelte';
 
-	export let dateTime, title, players, teamsPicked, date, time, id;
+	export let dateTime, title, players, teamsPicked, date, time, id, result;
 
 	const [send, receive] = crossfade({
 		duration: 200,
@@ -101,69 +101,91 @@
 
 <div>
 	<h1>{title}</h1>
-	<input type="date" value={date} min={date} on:change={handleDateChange} />
-	<input type="time" value={time} on:change={handleTimeChange} />
-	<div class="player-selection">
-		<div class="players-container">
-			{#if playerPool.length}
-				<div class="heading-2" transition:fade|local>Player Pool</div>
-				<div>
-					{#each playerPool as player (player)}
-						<label
-							class="block-label"
-							for={player.id}
-							in:receive
-							out:send
-							animate:flip
-						>
-							<input
-								type="checkbox"
-								name={player.id}
-								id={player.id}
-								on:change={() => playerSelect(player.id, true)}
-								disabled={teamsPicked}
-							/>
-							{player.name} ({player.elo})
-						</label>
-					{/each}
-				</div>
-			{/if}
+	<input
+		type="date"
+		value={date}
+		min={date}
+		on:change={handleDateChange}
+		disabled={result}
+	/>
+	<input
+		type="time"
+		value={time}
+		on:change={handleTimeChange}
+		disabled={result}
+	/>
+	{#if result}
+		<div class="result">
+			Winner: Team {result.winningTeam.toUpperCase()}
 		</div>
-		<div class="players-container">
-			{#if selectedPlayers.length}
-				<div class="heading-2" transition:fade|local>
-					Active Players
-				</div>
-				<div>
-					{#each selectedPlayers as player (player)}
-						<label
-							class="block-label"
-							for={player.id}
-							in:receive
-							out:send
-							animate:flip
-						>
-							<input
-								type="checkbox"
-								name={player.id}
-								id={player.id}
-								checked
-								on:change={() => playerSelect(player.id, false)}
-								disabled={teamsPicked}
-							/>
-							{player.name} ({player.elo})
-						</label>
-					{/each}
-				</div>
-			{/if}
+	{:else}
+		<div class="player-selection">
+			<div class="players-container">
+				{#if playerPool.length}
+					<div class="heading-2" transition:fade|local>
+						Player Pool
+					</div>
+					<div>
+						{#each playerPool as player (player)}
+							<label
+								class="block-label"
+								for={player.id}
+								in:receive
+								out:send
+								animate:flip
+							>
+								<input
+									type="checkbox"
+									name={player.id}
+									id={player.id}
+									on:change={() =>
+										playerSelect(player.id, true)}
+									disabled={teamsPicked}
+								/>
+								{player.name} ({player.elo})
+							</label>
+						{/each}
+					</div>
+				{/if}
+			</div>
+			<div class="players-container">
+				{#if selectedPlayers.length}
+					<div class="heading-2" transition:fade|local>
+						Active Players
+					</div>
+					<div>
+						{#each selectedPlayers as player (player)}
+							<label
+								class="block-label"
+								for={player.id}
+								in:receive
+								out:send
+								animate:flip
+							>
+								<input
+									type="checkbox"
+									name={player.id}
+									id={player.id}
+									checked
+									on:change={() =>
+										playerSelect(player.id, false)}
+									disabled={teamsPicked}
+								/>
+								{player.name} ({player.elo})
+							</label>
+						{/each}
+					</div>
+				{/if}
+			</div>
 		</div>
-	</div>
-	{#if !teamsPicked && selectedPlayers.length > 1}
-		<button on:click={handleSortTeams}>Sort teams</button>
+		{#if !teamsPicked && selectedPlayers.length > 1}
+			<button on:click={handleSortTeams}>Sort teams</button>
+		{/if}
 	{/if}
 	<Teams
 		teamsPlayers={selectedPlayers}
 		{isPassed}
+		{result}
 		on:click={handleSortTeams}
 		{teamsPicked}
 		on:modifyPlayerPool={modifyPlayerPool}
@@ -186,5 +208,11 @@
 
 	.block-label {
 		display: block;
+	}
+
+	.result {
+		font-size: 40px;
+		font-weight: 700;
+		margin-bottom: 40px;
 	}
 </style>
