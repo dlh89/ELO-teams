@@ -7,6 +7,7 @@
 	import { database } from '../config/firebase.js';
 	import { ref, push, update } from 'firebase/database';
 	import { goto } from '$app/navigation';
+	import { getModal } from './Modal.svelte';
 
 	export let dateTime, title, players, teamsPicked, date, time, id;
 
@@ -82,6 +83,9 @@
 		update(ref(database, `fixtures/${id}`), {
 			result: result,
 		});
+
+		getModal().close();
+		goto('/fixtures?notice=fixture-record-results');
 	}
 
 	function handleDateChange(e) {

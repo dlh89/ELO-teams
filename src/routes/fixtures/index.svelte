@@ -39,6 +39,8 @@
 			<div class="notice">Fixture saved successfully.</div>
 		{:else if notice === 'fixture-delete'}
 			<div class="notice">Fixture deleted.</div>
+		{:else if notice === 'fixture-record-results'}
+			<div class="notice">Result recorded.</div>
 		{/if}
 	{/if}
 	<h1>Fixtures</h1>
