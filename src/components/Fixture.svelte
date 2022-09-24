@@ -11,14 +11,14 @@
 	import type { PlayerType } from '../types/player.type';
 	import { getDateString } from '../lib/helpers';
 
-	export let dateTime: number,
+	export let dateTime: number | null = null,
 		title: string,
 		players: PlayerType[],
 		teamsPicked: boolean,
-		date: string,
-		time: string,
+		date: string | null = null,
+		time: string | null = null,
 		id: string | false,
-		result: any;
+		result: any | null = null;
 
 	const [send, receive] = crossfade({
 		duration: 200,
