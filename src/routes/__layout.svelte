@@ -4,6 +4,7 @@
 	import { getAuth } from 'firebase/auth';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 
 	const auth = getAuth(app);
 
@@ -34,12 +35,42 @@
 	<div class="row">
 		<ul>
 			{#if !$authStore.isLoggedIn}
-				<li><a href="/">Home</a></li>
-				<li><a href="/login">Login</a></li>
+				<li>
+					<a href="/" class:active={$page.url.pathname === '/'}
+						>Home</a
+					>
+				</li>
+				<li>
+					<a
+						href="/login"
+						class:active={$page.url.pathname.startsWith('/login')}
+						>Login</a
+					>
+				</li>
 			{:else}
-				<li><a href="/dashboard">Dashboard</a></li>
-				<li><a href="/fixtures">Fixtures</a></li>
-				<li><a href="/players">Edit players</a></li>
+				<li>
+					<a
+						href="/dashboard"
+						class:active={$page.url.pathname.startsWith(
+							'/dashboard'
+						)}>Dashboard</a
+					>
+				</li>
+				<li>
+					<a
+						href="/fixtures"
+						class:active={$page.url.pathname.startsWith(
+							'/fixtures'
+						)}>Fixtures</a
+					>
+				</li>
+				<li>
+					<a
+						href="/players"
+						class:active={$page.url.pathname.includes('/players')}
+						>Edit players</a
+					>
+				</li>
 			{/if}
 		</ul>
 		{#if $authStore.isLoggedIn}
@@ -59,5 +90,9 @@
 		font-size: 24px;
 		font-weight: 800;
 		margin-bottom: 18px;
+	}
+
+	.active {
+		font-weight: 600;
 	}
 </style>
