@@ -1,4 +1,4 @@
-<script type="ts">
+<script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import RecordResults from './RecordResults.svelte';
 	import Modal, { getModal } from './Modal.svelte';

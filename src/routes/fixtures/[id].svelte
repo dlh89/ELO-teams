@@ -1,12 +1,14 @@
-<script>
+<script lang="ts">
 	import { database } from '../../config/firebase.js';
 	import { onValue, ref, remove } from 'firebase/database';
 	import { goto } from '$app/navigation';
 	import { getDateString, getTimeString } from '../../lib/helpers';
 	import Fixture from '../../components/Fixture.svelte';
+	import type { FixtureType } from '../../types/fixture.type';
+	import type { PlayerType } from '../../types/player.type';
 
-	export let fixture, id;
-	let players = fixture.players;
+	export let fixture: FixtureType, id: string;
+	let players: PlayerType[] = fixture.players;
 
 	const playersRef = ref(database, 'players');
 	const activePlayersIds = players.map((player) => player.id);
@@ -15,7 +17,7 @@
 		const data = snapshot.val();
 		if (data) {
 			const playerIds = Object.keys(data);
-			let unusedPlayers = playerIds.filter(
+			let unusedPlayers: any[] = playerIds.filter(
 				(id) => !activePlayersIds.includes(id)
 			);
 

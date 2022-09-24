@@ -1,4 +1,4 @@
-<script type="ts">
+<script lang="ts">
 	import Fixture from '../../components/Fixture.svelte';
 	import { database } from '../../config/firebase.js';
 	import { ref, onValue } from 'firebase/database';

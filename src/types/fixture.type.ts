@@ -4,7 +4,7 @@ import type { ResultType } from "./result.type";
 export type FixtureType = {
     id: string
     dateTime: number
-    players: PlayerType
+    players: PlayerType[]
     result?: ResultType
     isPast: boolean
 }

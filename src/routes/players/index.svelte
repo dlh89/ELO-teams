@@ -6,7 +6,7 @@
 	import type { PlayerType } from '../../types/player.type';
 </script>
 
-<script type="ts">
+<script lang="ts">
 	let players: PlayerType[];
 	const playersRef = ref(database, 'players');
 

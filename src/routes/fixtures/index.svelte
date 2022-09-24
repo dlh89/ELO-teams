@@ -1,4 +1,4 @@
-<script type="ts">
+<script lang="ts">
 	import { database } from '../../config/firebase';
 	import { query, ref, onValue, orderByChild } from 'firebase/database';
 	import { getDateString, getTimeString } from '../../lib/helpers';

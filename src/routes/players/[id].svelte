@@ -1,4 +1,4 @@
-<script type="ts">
+<script lang="ts">
 	import { database } from '../../config/firebase.js';
 	import { ref, update, remove } from 'firebase/database';
 	import { goto } from '$app/navigation';
