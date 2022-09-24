@@ -1,13 +1,12 @@
-<script>
+<script type="ts">
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
 
-	function recordResult(e) {
+	function recordResult(e: any) {
 		const data = {
 			winningTeam: e.target.dataset.team,
 		};
-		console.log('data:', data);
 		dispatch('recordResult', data);
 	}
 </script>

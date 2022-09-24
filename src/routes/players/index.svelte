@@ -3,10 +3,11 @@
 	import { database } from '../../config/firebase.js';
 	import { ref, push, onValue } from 'firebase/database';
 	import { page } from '$app/stores';
+	import type { PlayerType } from '../../types/player.type';
 </script>
 
-<script>
-	let players = [];
+<script type="ts">
+	let players: PlayerType[];
 	const playersRef = ref(database, 'players');
 
 	onValue(playersRef, (snapshot) => {

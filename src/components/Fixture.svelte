@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { fade } from 'svelte/transition';
 	import { crossfade } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
@@ -8,8 +8,16 @@
 	import { ref, push, update } from 'firebase/database';
 	import { goto } from '$app/navigation';
 	import { getModal } from './Modal.svelte';
+	import type { PlayerType } from '../types/player.type';
 
-	export let dateTime, title, players, teamsPicked, date, time, id, result;
+	export let dateTime: number,
+		title: string,
+		players: PlayerType[],
+		teamsPicked: boolean,
+		date: string,
+		time: string,
+		id: string,
+		result: any;
 
 	const [send, receive] = crossfade({
 		duration: 200,
@@ -22,7 +30,7 @@
 	 * @param {number} id
 	 * @param {boolean} isPlaying
 	 */
-	function playerSelect(id, isPlaying) {
+	function playerSelect(id: string, isPlaying: boolean) {
 		const player = players.find((player) => player.id === id);
 		if (player) {
 			player.isPlaying = isPlaying;
@@ -71,7 +79,7 @@
 		goto('/fixtures?notice=fixture-save');
 	}
 
-	function recordResult(data) {
+	function recordResult(data: any) {
 		if (!id) {
 			return;
 		}
@@ -88,11 +96,13 @@
 		goto('/fixtures?notice=fixture-record-results');
 	}
 
-	function handleDateChange(e) {
+	function handleDateChange(e: any) {
+		console.log(e);
+		console.log(typeof e);
 		date = e.target.value;
 	}
 
-	function handleTimeChange(e) {
+	function handleTimeChange(e: any) {
 		time = e.target.value;
 	}
 

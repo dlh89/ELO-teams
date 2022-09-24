@@ -1,8 +1,14 @@
-<script>
+<script type="ts">
 	import { createEventDispatcher } from 'svelte';
 	import RecordResults from './RecordResults.svelte';
 	import Modal, { getModal } from './Modal.svelte';
-	export let teamsPlayers, teamsPicked, isPassed, result;
+	import type { PlayerType } from '../types/player.type';
+	import type { ResultType } from '../types/result.type';
+
+	export let teamsPlayers: PlayerType[],
+		teamsPicked: boolean,
+		isPassed: boolean,
+		result: ResultType;
 
 	const dispatch = createEventDispatcher();
 

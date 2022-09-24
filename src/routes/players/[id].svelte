@@ -1,15 +1,15 @@
-<script>
+<script type="ts">
 	import { database } from '../../config/firebase.js';
 	import { ref, update, remove } from 'firebase/database';
 	import { goto } from '$app/navigation';
+	import type { PlayerType } from '../../types/player.type';
 
-	export let player, id;
+	export let player: PlayerType, id: string;
 	let notice = '';
 
-	function handleSubmit(e) {
+	function handleSubmit(e: any) {
 		const formData = new FormData(e.target);
 
-		// TODO success message/redirect?
 		update(ref(database, `players/${id}`), {
 			name: formData.get('name'),
 		});
@@ -21,7 +21,6 @@
 			'Are you sure you want to permanently delete this player?'
 		);
 		if (isConfirmed) {
-			// TODO success message/redirect?
 			remove(ref(database, `players/${id}`));
 			goto('/players?notice=player-delete');
 		}
