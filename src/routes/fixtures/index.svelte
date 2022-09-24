@@ -1,10 +1,11 @@
-<script>
+<script type="ts">
 	import { database } from '../../config/firebase';
 	import { query, ref, onValue, orderByChild } from 'firebase/database';
 	import { getDateString, getTimeString } from '../../lib/helpers';
 	import { page } from '$app/stores';
+	import type { FixtureType } from '../../types/fixture.type';
 
-	let fixtures = [];
+	let fixtures: FixtureType[] = [];
 	const fixturesRef = query(
 		ref(database, '/fixtures'),
 		orderByChild('dateTime')
