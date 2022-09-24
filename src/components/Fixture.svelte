@@ -9,6 +9,7 @@
 	import { goto } from '$app/navigation';
 	import { getModal } from './Modal.svelte';
 	import type { PlayerType } from '../types/player.type';
+	import { getDateString } from '../lib/helpers';
 
 	export let dateTime: number,
 		title: string,
@@ -16,12 +17,15 @@
 		teamsPicked: boolean,
 		date: string,
 		time: string,
-		id: string,
+		id: string | false,
 		result: any;
 
 	const [send, receive] = crossfade({
 		duration: 200,
 	});
+
+	const nowDate = new Date().valueOf();
+	const minDate = getDateString(nowDate);
 
 	$: playerPool = players.filter((player) => !player.isPlaying);
 	$: selectedPlayers = players.filter((player) => player.isPlaying);
@@ -97,8 +101,6 @@
 	}
 
 	function handleDateChange(e: any) {
-		console.log(e);
-		console.log(typeof e);
 		date = e.target.value;
 	}
 
@@ -114,7 +116,7 @@
 	<input
 		type="date"
 		value={date}
-		min={date}
+		min={minDate}
 		on:change={handleDateChange}
 		disabled={result}
 	/>

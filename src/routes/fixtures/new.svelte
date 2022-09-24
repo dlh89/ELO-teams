@@ -1,15 +1,11 @@
-<script>
+<script type="ts">
 	import Fixture from '../../components/Fixture.svelte';
-	import { getDateString, getTimeString } from '../../lib/helpers';
 	import { database } from '../../config/firebase.js';
 	import { ref, onValue } from 'firebase/database';
-
-	const nowDate = new Date().valueOf();
-	let date = getDateString(nowDate);
-	let time = getTimeString(nowDate);
+	import type { PlayerType } from '../../types/player.type';
 
 	let teamsPicked = false;
-	let players = [];
+	let players: PlayerType[] = [];
 
 	const playersRef = ref(database, 'players');
 
@@ -31,12 +27,5 @@
 </script>
 
 <div class="row">
-	<Fixture
-		title="New fixture"
-		{date}
-		{time}
-		{teamsPicked}
-		{players}
-		id={false}
-	/>
+	<Fixture title="New fixture" {teamsPicked} {players} id={false} />
 </div>
